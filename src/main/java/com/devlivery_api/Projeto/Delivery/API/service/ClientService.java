@@ -2,10 +2,11 @@ package com.devlivery_api.Projeto.Delivery.API.service;
 
 import com.devlivery_api.Projeto.Delivery.API.entity.Client;
 import com.devlivery_api.Projeto.Delivery.API.repository.ClientRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,7 +23,7 @@ public class ClientService {
 
         validateClientData(Client);
         
-        Client.setAtivo(true);
+        Client.setActive(true);
 
         return ClientRepository.save(Client);
     }
@@ -39,7 +40,7 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public List<Client> listActive() {
-        return ClientRepository.findByAtivoTrue();
+        return ClientRepository.findByActiveTrue();
     }
 
     public Client update(Long id, Client UpdatedClient) {
@@ -52,47 +53,38 @@ public class ClientService {
         }
 
 
-        Client.setNome(UpdatedClient.getNome());
+        Client.setName(UpdatedClient.getName());
         Client.setEmail(UpdatedClient.getEmail());
-        Client.setTelefone(UpdatedClient.getTelefone());
-        Client.setEndereco(UpdatedClient.getEndereco());
+        Client.setPhone(UpdatedClient.getPhone());
+        Client.setAddress(UpdatedClient.getAddress());
 
         return ClientRepository.save(Client);
     }
 
-    /**
-     * Inativar Client (soft delete)
-     */
     public void deactivate(Long id) {
         Client Client = searchById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Client not found: " + id));
 
-        Client.inativar();
+        Client.deactivate();
         ClientRepository.save(Client);
     }
 
-    /**
-     * Buscar Clients por nome
-     */
     @Transactional(readOnly = true)
     public List<Client> searchByName(String name) {
-        return ClientRepository.findByNomeContainingIgnoreCase(name);
+        return ClientRepository.findByNameContainingIgnoreCase(name);
     }
 
-    /**
-     * Validações de negócio
-     */
     private void validateClientData(Client Client) {
-        if (Client.getNome() == null || Client.getNome().trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome é obrigatório");
+        if (Client.getName() == null || Client.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Name is mandatory");
         }
 
         if (Client.getEmail() == null || Client.getEmail().trim().isEmpty()) {
-            throw new IllegalArgumentException("Email é obrigatório");
+            throw new IllegalArgumentException("Email is mandatory");
         }
 
-        if (Client.getNome().length() < 2) {
-            throw new IllegalArgumentException("Nome deve ter pelo menos 2 caracteres");
+        if (Client.getName().length() < 2) {
+            throw new IllegalArgumentException("Name must have at least 2 characters");
         }
     }
 }
