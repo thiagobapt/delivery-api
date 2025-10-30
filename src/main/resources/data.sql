@@ -2,13 +2,13 @@
 -- Arquivo: src/main/resources/data.sql
 
 -- Inserir clients
-INSERT INTO clients (name, email, phone, endereco, registration_date, active) VALUES
+INSERT INTO clients (name, email, phone, address, registration_date, active) VALUES
 ('João Silva', 'joao@email.com', '(11) 99999-1111', 'Rua A, 123 - São Paulo/SP', CURRENT_TIMESTAMP, true),
 ('Maria Santos', 'maria@email.com', '(11) 99999-2222', 'Rua B, 456 - São Paulo/SP', CURRENT_TIMESTAMP, true),
 ('Pedro Oliveira', 'pedro@email.com', '(11) 99999-3333', 'Rua C, 789 - São Paulo/SP', CURRENT_TIMESTAMP, true);
 
 -- Inserir restaurantes
-INSERT INTO restaurants (name, categoria, endereco, phone, delivery_fee, rating, active) VALUES
+INSERT INTO restaurants (name, category, address, phone, delivery_fee, rating, active) VALUES
 ('Pizzaria Bella', 'Italiana', 'Av. Paulista, 1000 - São Paulo/SP', '(11) 3333-1111', 5.00, 4.5, true),
 ('Burger House', 'Hamburgueria', 'Rua Augusta, 500 - São Paulo/SP', '(11) 3333-2222', 3.50, 4.2, true),
 ('Sushi Master', 'Japonesa', 'Rua Liberdade, 200 - São Paulo/SP', '(11) 3333-3333', 8.00, 4.8, true);
